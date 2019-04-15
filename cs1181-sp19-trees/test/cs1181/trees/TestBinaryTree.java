@@ -1,4 +1,5 @@
 package cs1181.trees;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,9 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-
-import cs1181.trees.BinaryNode;
-import cs1181.trees.BinaryTree;
 
 /**
  *
@@ -382,6 +380,34 @@ public class TestBinaryTree
       assertNull(left.getRight());
 
       assertNull(root.getRight());
+   }
+
+   /**
+    * delete a node with children
+    */
+   @Test
+   public void testDeleteMoreChildren()
+   {
+      final BinaryTree<String> tree = makeTree("steve", "betts", "carl", "trump", "turnip", "fake news", "alpha king",
+            "witch hunt", "bad wolf", "arizona tea");
+      System.out.println("testDeleteMoreChildren");
+      System.out.println(tree);
+
+      tree.delete("betts");
+
+      System.out.println("After");
+      System.out.println(tree);
+
+      final BinaryNode<String> root = tree.getRoot();
+      assertEquals("steve", root.getValue());
+
+      final BinaryNode<String> replacement = root.getLeft();
+      assertEquals("bad wolf", replacement.getValue());
+
+      final BinaryNode<String> king = replacement.getLeft();
+      assertEquals("alpha king", king.getValue());
+      assertEquals("carl", replacement.getRight().getValue());
+      assertEquals("arizona tea", king.getRight().getValue());
    }
 
    /**
